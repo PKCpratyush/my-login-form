@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    {% if id_exist %}
+    <script>
+        alert('{{ message }}');
+    </script>
+    {% endif %}
+    <form action="/show_data" method="POST"> {% csrf_token %}
+        <input type="text" name="ID" id="" placeholder="enter a unique id name">
+        <input type="text" name="Name" id="" placeholder="Enter Your Name">
+        <input type="password" name="Password" id="" placeholder="Provide a strong password">
+        <button type="submit" name="login"> Log In </button>
+        <a name="submit" href="/show_data"> Create </a>
+        <!-- <form action='/show_data' method='POST'>
+            <button type='submit' name="submit"> Create </button>
+            </form> -->
+    </form>
+</body>
+</html>
