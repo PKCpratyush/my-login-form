@@ -15,9 +15,29 @@ def show_data(request):
 
     # print(identity,name,password)
 
-    user = our_users(id = 123, user_name = user_name, user_id = user_id,  user_password = user_password)
+    if user_id == "":
+        return render(request, "index.html", {"id_exist":"please do not leave ID blank"})
+
+    if user_name == "":
+        return render(request, "index.html", {"id_exist":"please fill the username section"})
+
+    if user_password == "":
+        return render(request, "index.html", {"id_exist":"please provide password"})
+
+    flag = False
+    result = our_users.objects.all()
+    for item in result:
+        if item.user_id == user_id:
+            if item.user_password == user_password and item.user_name == user_name:
+                return render(request, 'information.html', {"user_exist":True, "data":result})
+            flag = True
+            break
+    if flag == True:
+        result = {"message": "please provide unique user ID"}
+        return render(request, "index.html", {"id_exist":"please provide unique user ID"})
+
+    user = our_users(user_name = user_name, user_id = user_id,  user_password = user_password)
     user.save()
 
-    result = our_users.objects.all()
     print(result)
-    return render(request, 'information.html', {"data":result})
+    return render(request, 'information.html', {"user_exist":False, "data":result})
